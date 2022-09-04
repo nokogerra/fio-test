@@ -34,6 +34,14 @@
        dev: /dev/mapper/vgc-lvc
        fstype: ext4
        state: present
+   - name: 'create directory lvb'
+     file:
+       path: /lvb
+       state: directory
+   - name: 'create directory lvc'
+     file:
+       path: /lvc
+       state: directory
    - name: 'mount fs1'
      ansible.posix.mount:
        path: /lvb
