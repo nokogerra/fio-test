@@ -1,0 +1,45 @@
+---
+- name: 'configure storage for fio test'
+  hosts: fio
+  tasks:
+   - name: 'create PV1 and VG1'
+     community.general.lvg:
+       vg: vgb
+       pvs: /dev/sdb
+   - name: 'create PV2 and VG2'
+     community.general.lvg:
+       vg: vgc
+       pvs: /dev/sdc
+   - name: 'create lvb'
+     community.general.lvol:
+       lv: lvb
+       vg: vgb
+       size: 100%FREE
+   - name: 'create lvc'
+     community.general.lvol:
+       lv: lvc
+       vg: vgc
+       size: 100%FREE    
+   - name: 'create fs1'
+     service:
+       dev: /dev/mapper/vgb-lvb
+       fstype: ext4
+       state: present
+   - name: 'create fs2'
+     service:
+       dev: /dev/mapper/vgc-lvc
+       fstype: ext4
+       state: present
+   - name: 'mount fs1'
+     ansible.posix.mount:
+       path: /lvb
+       src: /dev/mapper/vgb-lvb
+       state: present
+       fstype: ext4
+   - name: 'mount fs2'
+     ansible.posix.mount:
+       path: /lvc
+       src: /dev/mapper/vgc-lvc
+       state: present
+       fstype: ext4
+...
