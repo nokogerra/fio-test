@@ -13,11 +13,12 @@
        state: present
    - name: 'copy fio templates into fio directory'
      template:
-       src: "{{ item }}"
-       dest: "{{ fio_dir }}/{{ item }}"
+       src: "{{ item.src }}"
+       dest: "{{ fio_dir }}/{{ item.dst }}"
      loop:
-       - workload-profile1.j2
-       - workload-profile2.j2
-       - workload-profile3.j2
-       - workload-profile4.j2
+       - { src: 'workload-profile1.j2', dest: 'workload-profile1.fio' }
+       - { src: 'workload-profile2.j2', dest: 'workload-profile2.fio' }
+       - { src: 'workload-profile3.j2', dest: 'workload-profile3.fio' }
+       - { src: 'workload-profile4.j2', dest: 'workload-profile4.fio' }
+
 ...
