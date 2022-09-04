@@ -14,11 +14,15 @@
      community.general.lvol:
        lv: lvb
        vg: vgb
+       state: present
+       shrink: false
        size: 100%FREE
    - name: 'create lvc'
      community.general.lvol:
        lv: lvc
        vg: vgc
+       state: present
+       shrink: false
        size: 100%FREE    
    - name: 'create fs1'
      community.general.filesystem:
