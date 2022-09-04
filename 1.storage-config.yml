@@ -21,12 +21,12 @@
        vg: vgc
        size: 100%FREE    
    - name: 'create fs1'
-     service:
+     community.general.filesystem:
        dev: /dev/mapper/vgb-lvb
        fstype: ext4
        state: present
    - name: 'create fs2'
-     service:
+     community.general.filesystem:
        dev: /dev/mapper/vgc-lvc
        fstype: ext4
        state: present
