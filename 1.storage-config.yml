@@ -20,7 +20,7 @@
    - name: 'create lv2'
      community.general.lvol:
        lv: "{{ lv2 }}"
-       vg: "{{ vg22 }}"
+       vg: "{{ vg2 }}"
        state: present
        shrink: false
        size: 100%FREE    
