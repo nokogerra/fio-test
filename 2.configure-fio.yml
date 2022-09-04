@@ -14,7 +14,7 @@
    - name: 'copy fio templates into fio directory'
      template:
        src: "{{ item.src }}"
-       dest: "{{ fio_dir }}/{{ item.dst }}"
+       dest: "{{ fio_dir }}/{{ item.dest }}"
      loop:
        - { src: 'workload-profile1.j2', dest: 'workload-profile1.fio' }
        - { src: 'workload-profile2.j2', dest: 'workload-profile2.fio' }
