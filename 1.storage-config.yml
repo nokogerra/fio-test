@@ -4,34 +4,34 @@
   tasks:
    - name: 'create PV1 and VG1'
      community.general.lvg:
-       vg: vgb
-       pvs: /dev/sdb
+       vg: "{{ disk1 }}"
+       pvs: "/dev/{{ disk1 }}"
    - name: 'create PV2 and VG2'
      community.general.lvg:
-       vg: vgc
-       pvs: /dev/sdc
-   - name: 'create lvb'
+       vg: "{{ disk2 }}"
+       pvs: "/dev/{{ disk2 }}"
+   - name: 'create lv1'
      community.general.lvol:
-       lv: lvb
-       vg: vgb
+       lv: "{{ disk1 }}"
+       vg: "{{ disk1 }}"
        state: present
        shrink: false
        size: 100%FREE
-   - name: 'create lvc'
+   - name: 'create lv2'
      community.general.lvol:
-       lv: lvc
-       vg: vgc
+       lv: "{{ disk2 }}"
+       vg: "{{ disk2 }}"
        state: present
        shrink: false
        size: 100%FREE    
    - name: 'create fs1'
      community.general.filesystem:
-       dev: /dev/mapper/vgb-lvb
+       dev: "/dev/mapper/{{ disk1 }}-{{ disk1 }}"
        fstype: ext4
        state: present
    - name: 'create fs2'
      community.general.filesystem:
-       dev: /dev/mapper/vgc-lvc
+       dev: "/dev/mapper/{{ disk2 }}-{{ disk2 }}"
        fstype: ext4
        state: present
 #   - name: 'create directory lvb'
@@ -44,14 +44,14 @@
 #       state: directory
    - name: 'mount fs1'
      ansible.posix.mount:
-       path: /lvb
-       src: /dev/mapper/vgb-lvb
+       path: "/{{ disk1 }}"
+       src: "/dev/mapper/{{ disk1 }}-{{ disk1 }}"
        state: mounted
        fstype: ext4
    - name: 'mount fs2'
      ansible.posix.mount:
-       path: /lvc
-       src: /dev/mapper/vgc-lvc
+       path: "/{{ disk2 }}"
+       src: "/dev/mapper/{{ disk2 }}-{{ disk2 }}"
        state: mounted
        fstype: ext4
 ...
