@@ -1,0 +1,23 @@
+---
+- name: 'configure fio'
+  hosts: fio
+  tasks:
+   - name: 'create fio directory'
+     file:
+       name: "{{ fio_dir }}"
+       state: directory
+   - name: 'install fio'
+     ansible.builtin.apt:
+       update_cache: true
+       name: fio
+       state: present
+   - name: 'copy fio templates into fio directory'
+     template:
+       src: "{{ item }}"
+       dest: "{{ fio_dir }}/{{ item }}"
+     loop:
+       - workload-profile1.j2
+       - workload-profile2.j2
+       - workload-profile3.j2
+       - workload-profile4.j2
+...

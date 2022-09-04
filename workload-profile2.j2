@@ -1,0 +1,32 @@
+[global]
+ioengine=libaio
+#omit guest cache and fsync
+fsync=0
+direct=1
+#randomness
+rw=randread
+bs={{bs_wp2}}
+#time config
+ramp_time={{ ramp_secs }}
+time_based=1
+runtime={{ runtime_secs }}
+#test file size
+size={{ test_file_size }}
+#output format
+group_reporting
+
+[{{ job1_name }}]
+filename=/{{ lv1 }}/{{ job1_name }}
+zonemode=strided
+zonesize={{ zone_size_bytes }}
+zonerange={{ zone_range_bytes }}
+zoneskip={{ zone_skip_bytes }}
+iodepth={{ io_depth_wp2 }}
+
+[{{ job2_name }}]
+filename=/{{ lv2 }}/{{ job2_name }}
+zonemode=strided
+zonesize={{ zone_size_bytes }}
+zonerange={{ zone_range_bytes }}
+zoneskip={{ zone_skip_bytes }}
+iodepth={{ io_depth_wp2 }}
