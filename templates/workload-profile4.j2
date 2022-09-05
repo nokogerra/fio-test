@@ -4,9 +4,8 @@ ioengine=libaio
 fsync=0
 direct=1
 #randomness
-percentage_random={{ rand_pct_wp1 }}
-rw=randrw
-bssplit={{bssplit_wp1}}
+rw=write
+bs={{bs_wp4}}
 #time config
 ramp_time={{ ramp_secs }}
 time_based=1
@@ -22,7 +21,7 @@ zonemode=strided
 zonesize={{ zone_size_bytes }}
 zonerange={{ zone_range_bytes }}
 zoneskip={{ zone_skip_bytes }}
-iodepth={{ io_depth_wp1 }}
+iodepth={{ io_depth_j1 }}
 
 [{{ job2_name }}]
 filename=/{{ lv2 }}/{{ job2_name }}
@@ -30,4 +29,4 @@ zonemode=strided
 zonesize={{ zone_size_bytes }}
 zonerange={{ zone_range_bytes }}
 zoneskip={{ zone_skip_bytes }}
-iodepth={{ io_depth_wp1 }}
+iodepth={{ io_depth_j2 }}

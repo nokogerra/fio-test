@@ -6,6 +6,8 @@
      file:
        name: "{{ fio_dir }}"
        state: directory
+       owner: ansible
+       group: ansible
    - name: 'install fio'
      ansible.builtin.apt:
        update_cache: true
