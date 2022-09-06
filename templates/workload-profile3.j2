@@ -15,18 +15,12 @@ size={{ test_file_size }}
 #output format
 group_reporting
 
-[{{ job1_name }}]
-filename=/{{ lv1 }}/{{ job1_name }}
-zonemode=strided
-zonesize={{ zone_size_bytes }}
-zonerange={{ zone_range_bytes }}
-zoneskip={{ zone_skip_bytes }}
-iodepth={{ io_depth_j1 }}
-
-[{{ job2_name }}]
-filename=/{{ lv2 }}/{{ job2_name }}
-zonemode=strided
-zonesize={{ zone_size_bytes }}
-zonerange={{ zone_range_bytes }}
-zoneskip={{ zone_skip_bytes }}
-iodepth={{ io_depth_j2 }}
+{% for j in jobs -%}
+[{{ j.name }}]
+filename={{ j.file }}
+iodepth={{ j.io_depth}}
+zonemode={{ j.zonemode }}
+zonesize={{ j.zone_size_bytes }}
+zonerange={{ j.zone_range_bytes }}
+zoneskip={{ j.zone_skip_bytes }}
+{% endfor %}
