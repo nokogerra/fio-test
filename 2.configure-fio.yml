@@ -18,7 +18,7 @@
        state: present   
    - name: "Transferring all data files"
      template:
-       src: "{{ templates_dir }}/{{ item | basename }}"
+       src: "{{ item | basename }}"
        dest: "{{ fio_dir }}/{{ item | basename }}.fio"
      with_fileglob: "*.j2"
 - name: 'set the correct EN_US locale so the iostat output could be used by iostat-cli and matplotlib'
