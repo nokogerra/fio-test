@@ -17,11 +17,11 @@ size={{ test_file_size }}
 group_reporting
 
 {% for j in jobs -%}
-[{{ j.name }}]
-filename={{ j.file }}
-iodepth={{ j.io_depth}}
-zonemode={{ j.zonemode }}
-zonesize={{ j.zone_size_bytes }}
-zonerange={{ j.zone_range_bytes }}
-zoneskip={{ j.zone_skip_bytes }}
+[{{ jobs[j].name }}]
+filename={{ jobs[j].file }}
+iodepth={{ jobs[j].io_depth}}
+zonemode={{ jobs[j].zonemode }}
+zonesize={{ jobs[j].zone_size_bytes }}
+zonerange={{ jobs[j].zone_range_bytes }}
+zoneskip={{ jobs[j].zone_skip_bytes }}
 {% endfor %}
