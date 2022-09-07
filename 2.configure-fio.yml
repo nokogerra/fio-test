@@ -9,7 +9,7 @@
        recurse: true
        owner: "{{ main_user }}"
        group: "{{ main_group }}"
-       mode: u=rwX,g=rwX,o=rwX
+       mode: 02777
    - name: 'install fio'
      ansible.builtin.apt:
        update_cache: true
