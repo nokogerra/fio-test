@@ -9,9 +9,9 @@
      register: fio_run
    - name: 'wait for warm time to start iostat data gathering'
      ansible.builtin.pause:
-     echo: true
-     seconds: "{{ ramp_ secs }}"
-     prompt: 'waiting for ramp time to start iostat data gathering'
+       echo: true
+       seconds: "{{ ramp_ secs }}"
+       prompt: 'waiting for ramp time to start iostat data gathering'
    - name: 'start iostat data gathering'
      ansible.builtin.shell module: iostat -xtym sdb sdc 3 20 > {{ fio_dir }}/{{ ansible_hostname }}-p1-iostat.out
      async: 7200
@@ -19,21 +19,21 @@
      register: iostat_run
    - name: 'check if fio run is complete'
      async_status:
-      jid: "{{ fio_run.ansible_job_id }}"
-      register: fio_run_result
-      until: fio_run_result.finished
-      delay: 300
-      retries: 50
-     async: 7200
-     poll: 0
-   - name: 'check if iostat run is complete'
-     async_status:
-      jid: "{{ iostat_run.ansible_job_id }}"
-      register: iostat_run_result
-      until: iostat_run_result.finished
-      delay: 300
-      retries: 50
-     async: 7200
-     poll: 0      
+       jid: "{{ fio_run.ansible_job_id }}"
+     register: fio_run_result
+     until: fio_run_result.finished
+     delay: 300
+     retries: 50
+#     async: 7200
+#     poll: 0
+#   - name: 'check if iostat run is complete'
+#     async_status:
+#       jid: "{{ iostat_run.ansible_job_id }}"
+#     register: iostat_run_result
+#     until: iostat_run_result.finished
+#     delay: 300
+#     retries: 50
+#     async: 7200
+#     poll: 0      
 
 ...
