@@ -33,7 +33,7 @@
        path: "/{{ item.lv }}"
        state: directory
        recurse: true
-       mode: 2666
+       mode: u=rwX,g=rwX,o=rwX
        owner: "{{ main_user }}"
        group: "{{ main_group }}"
      loop: "{{ storages }}"     
