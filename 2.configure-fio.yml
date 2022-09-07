@@ -6,7 +6,10 @@
      file:
        name: "{{ fio_dir }}"
        state: directory
-       owner: ansible
+       recurse: true
+       owner: "{{ main_user }}"
+       group: "{{ main_group }}"
+       mode: 2666
    - name: 'install fio'
      ansible.builtin.apt:
        update_cache: true
