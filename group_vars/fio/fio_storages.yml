@@ -1,0 +1,12 @@
+---
+#this is the list of disks/PVs/VGs/LVs to create on destination VMs
+storages:
+  - name: "sdb"
+    pv: "sdb"
+    vg: "vgb"
+    lv: "lvb"
+  - name: "sdc"
+    pv: "sdc"
+    vg: "vgc"
+    lv: "lvc"
+...

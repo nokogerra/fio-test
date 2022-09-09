@@ -1,0 +1,5 @@
+---
+main_user: ansible
+main_group: ansible
+ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+...

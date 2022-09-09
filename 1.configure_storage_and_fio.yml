@@ -1,4 +1,45 @@
 ---
+#configure PVs, VGs, LVs, file systems and mount those FS
+#based on fio_storages.yml vars
+- name: 'configure storage for fio test'
+  hosts: fio
+  tasks:
+   - name: 'create PVs and VGs'
+     community.general.lvg:
+       vg: "{{ item.vg }}"
+       pvs: "/dev/{{ item.pv }}"
+     loop: "{{ storages }}"
+   - name: 'create LVs'
+     community.general.lvol:
+       lv: "{{ item.lv }}"
+       vg: "{{ item.vg }}"
+       state: present
+       shrink: false
+       size: 100%FREE
+     loop: "{{ storages }}"
+   - name: 'create FSes'
+     community.general.filesystem:
+       dev: "/dev/mapper/{{ item.vg }}-{{ item.lv }}"
+       fstype: ext4
+       state: present
+     loop: "{{ storages }}"
+   - name: 'mount FSes'
+     ansible.posix.mount:
+       path: "/{{ item.lv }}"
+       src: "/dev/mapper/{{ item.vg }}-{{ item.lv }}"
+       state: mounted
+       fstype: ext4
+     loop: "{{ storages }}"
+   - name: 'FSes permissions'
+     ansible.builtin.file:
+       path: "/{{ item.lv }}"
+       state: directory
+       recurse: true
+       mode: 02777
+       owner: "{{ main_user }}"
+       group: "{{ main_group }}"
+     loop: "{{ storages }}"
+#install fio, iostat, make fio directory and use j2 templates to create fio job files 
 - name: 'configure fio'
   hosts: fio
   tasks:
@@ -25,6 +66,7 @@
        src: "{{ item | basename }}"
        dest: "{{ fio_dir }}/{{ item | basename }}.fio"
      with_fileglob: "*.j2"
+#set the EN_US locale
 - name: 'set the correct EN_US locale so the iostat output could be used by iostat-cli and matplotlib'
   hosts: fio
   tasks:
@@ -51,3 +93,4 @@
      command: localectl set-locale LANG={{ config_system_locale }} LANGUAGE={{ config_system_language }}
      changed_when: locale_lang != config_system_locale or locale_language != config_system_language   
 ...
+

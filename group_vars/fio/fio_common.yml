@@ -1,0 +1,30 @@
+---
+#this is locale vars, EN_US is required for iostat output to be viable as iostat-cli input
+config_system_locale: "en_US.UTF-8"
+config_system_language: "en_US.UTF-8"
+#async run tasks async/poll parameters and async check tasks delays/retries parameters
+async_timeout: 7200
+async_poll: 0
+async_delay: 10
+async_retries: 10
+#iostat collects perf snapshots on interval basis, e.g. interval 3 secs, count of intervals = 20, so iostat will be collecting data fo 60 seconds
+#iostat intervals length and count:
+iostat_int: 3
+iostat_count: 20
+# FIO common job vars
+#templates_dir: "/home/ansible/fio-test/templates"
+#templates module is bugged about absolute of relative paths atm, so templates should be placed in the repo root
+fio_dir: "/fio"
+ramp_secs: "10"
+runtime_secs: "60"
+test_file_size: "16g"
+# FIO workload_profile1 job vars
+rand_pct_wp1: 70
+bssplit_wp1: 64k/50:256k/15:32k/25:8k/10,64k/25:256k/5:32k/35:8k/35
+# FIO workload_profile2 job vars
+bs_wp2: 4k
+# FIO workload_profile3 job vars
+bs_wp3: 256k
+# FIO workload_profile4 job vars
+bs_wp4: 256k
+...

@@ -2,48 +2,39 @@
 - name: 'configure storage for fio test'
   hosts: fio
   tasks:
-   - name: 'create PV1 and VG1'
+   - name: 'create PVs and VGs'
      community.general.lvg:
-       vg: "{{ vg1 }}"
-       pvs: "/dev/{{ disk1 }}"
-   - name: 'create PV2 and VG2'
-     community.general.lvg:
-       vg: "{{ vg2 }}"
-       pvs: "/dev/{{ disk2 }}"
-   - name: 'create lv1'
+       vg: "{{ item.vg }}"
+       pvs: "/dev/{{ item.pv }}"
+     loop: "{{ storages }}"
+   - name: 'create LVs'
      community.general.lvol:
-       lv: "{{ lv1 }}"
-       vg: "{{ vg1 }}"
+       lv: "{{ item.lv }}"
+       vg: "{{ item.vg }}"
        state: present
        shrink: false
        size: 100%FREE
-   - name: 'create lv2'
-     community.general.lvol:
-       lv: "{{ lv2 }}"
-       vg: "{{ vg2 }}"
-       state: present
-       shrink: false
-       size: 100%FREE    
-   - name: 'create fs1'
+     loop: "{{ storages }}"
+   - name: 'create FSes'
      community.general.filesystem:
-       dev: "/dev/mapper/{{ vg1 }}-{{ lv1 }}"
+       dev: "/dev/mapper/{{ item.vg }}-{{ item.lv }}"
        fstype: ext4
        state: present
-   - name: 'create fs2'
-     community.general.filesystem:
-       dev: "/dev/mapper/{{ vg2 }}-{{ lv2 }}"
-       fstype: ext4
-       state: present
-   - name: 'mount fs1'
+     loop: "{{ storages }}"
+   - name: 'mount FSes'
      ansible.posix.mount:
-       path: "/{{ lv1 }}"
-       src: "/dev/mapper/{{ vg1 }}-{{ lv1 }}"
+       path: "/{{ item.lv }}"
+       src: "/dev/mapper/{{ item.vg }}-{{ item.lv }}"
        state: mounted
        fstype: ext4
-   - name: 'mount fs2'
-     ansible.posix.mount:
-       path: "/{{ lv2 }}"
-       src: "/dev/mapper/{{ vg2 }}-{{ lv2 }}"
-       state: mounted
-       fstype: ext4
+     loop: "{{ storages }}"
+   - name: 'FSes permissions'
+     ansible.builtin.file:
+       path: "/{{ item.lv }}"
+       state: directory
+       recurse: true
+       mode: 02777
+       owner: "{{ main_user }}"
+       group: "{{ main_group }}"
+     loop: "{{ storages }}"     
 ...

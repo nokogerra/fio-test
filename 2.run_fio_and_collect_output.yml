@@ -1,0 +1,7 @@
+---
+- name: 'run repeatable fio_run_internal'
+  hosts: fio
+  tasks:
+    - name: 'run_fio'
+      include: fio_run_internal.yml
+      loop: "{{ workload_profiles }}"
