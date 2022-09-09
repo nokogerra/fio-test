@@ -1,4 +1,8 @@
 # fio-test
+need to install on controller:
+jmespath
+iostat-cli
+matplotlib
 
 
 
