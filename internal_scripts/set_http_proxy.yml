@@ -1,0 +1,9 @@
+---
+- name: 'set up proxy'
+  ansible.builtin.lineinfile:
+    dest: "/etc/environment"
+    state: present
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value }}"
+  with_items: "{{ proxy_vars }}"
+...

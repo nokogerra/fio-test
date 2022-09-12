@@ -1,4 +1,18 @@
 ---
+#disable UFW
+- name: 'disable UFW'
+  hosts: fio
+  tasks:
+   - name: 'disable UFW'
+     community.general.ufw:
+       state: disabled
+#configure proxy server for apt/pip usage
+#if there is no proxy server in your environment, then this entire play should be commented out
+- name: 'set up proxy'
+  hosts: fio
+  tasks:
+    - name: 'set up proxy'
+      include: internal_scripts/set_http_proxy.yml
 #configure PVs, VGs, LVs, file systems and mount those FS
 #based on fio_storages.yml vars
 - name: 'configure storage for fio test'
@@ -63,34 +77,14 @@
        state: present   
    - name: "Transferring all data files"
      template:
-       src: "{{ item | basename }}"
+       src: "../templates/{{ item | basename }}"
        dest: "{{ fio_dir }}/{{ item | basename }}.fio"
-     with_fileglob: "*.j2"
+     with_fileglob: "workload_profile*.j2"
 #set the EN_US locale
 - name: 'set the correct EN_US locale so the iostat output could be used by iostat-cli and matplotlib'
   hosts: fio
   tasks:
-   - name: Ensure localisation files for '{{ config_system_locale }}' are available
-     locale_gen:
-       name: "{{ config_system_locale }}"
-       state: present
-   - name: Ensure localisation files for '{{ config_system_language }}' are available
-     locale_gen:
-       name: "{{ config_system_language }}"
-       state: present
-   - name: Get current locale and language configuration
-     command: localectl status
-     register: locale_status
-     changed_when: false
-   - name: Parse 'LANG' from current locale and language configuration
-     set_fact:
-       locale_lang: "{{ locale_status.stdout | regex_search('LANG=([^\n]+)', '\\1') | first }}"
-   - name: Parse 'LANGUAGE' from current locale and language configuration
-     set_fact:
-       locale_language: "{{ locale_status.stdout | regex_search('LANGUAGE=([^\n]+)', '\\1') | default([locale_lang], true) | first }}"
-   - name: Configure locale to '{{ config_system_locale }}' and language to '{{ config_system_language }}'
-     become: yes
-     command: localectl set-locale LANG={{ config_system_locale }} LANGUAGE={{ config_system_language }}
-     changed_when: locale_lang != config_system_locale or locale_language != config_system_language   
+    - name: 'set locale'
+      include: internal_scripts/set_os_locale.yml
 ...
 

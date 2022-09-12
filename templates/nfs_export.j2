@@ -1,0 +1,3 @@
+{% for n in nfs_ex -%}
+{{ nfs_ex[n].dir }} {{ nfs_ex[n].clients }}({{ nfs_ex[n].rws }},{{ nfs_ex[n].sync }},{{ nfs_ex[n].squash }})
+{% endfor %}

@@ -1,0 +1,15 @@
+---
+nfs_ex:
+  export1:
+    dir: "/nfs_export"
+    clients: '*'
+    rws: rw
+    sync: sync
+    squash: no_root_squash
+#  export2:
+#    dir: "/nfs_export2"
+#    clients: '10.215.0.0/24'
+#    rws: rw
+#    sync: sync
+#    squash: no_root_squash
+...

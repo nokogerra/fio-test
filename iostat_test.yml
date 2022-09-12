@@ -1,7 +1,0 @@
----
-- name: 'start iostat data gathering'
-  ansible.builtin.shell: iostat -xtym {{ storages | community.general.json_query("[*].pv") | join(' ') }} {{ iostat_int }} {{ iostat_count }} > {{ fio_dir }}/{{ ansible_hostname }}-{{ item }}-iostat.out
-  async: "{{ async_timeout }}"
-  poll: "{{ async_poll }}"
-#  register: iostat_run
-...

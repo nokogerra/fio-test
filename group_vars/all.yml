@@ -2,4 +2,13 @@
 main_user: ansible
 main_group: ansible
 ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+#proxy vars
+proxy_vars:
+  - key: HTTP_PROXY
+    value: http://<usr_name>:<password>@<proxyserver_name>:<port#>
+#  - key: MY_ENV_VARIABLE
+#    value: ENV_VALUE
+#this is locale vars, EN_US is required for iostat output to be viable as iostat-cli input
+config_system_locale: "en_US.UTF-8"
+config_system_language: "en_US.UTF-8"
 ...

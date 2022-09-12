@@ -1,7 +1,4 @@
 ---
-#this is locale vars, EN_US is required for iostat output to be viable as iostat-cli input
-config_system_locale: "en_US.UTF-8"
-config_system_language: "en_US.UTF-8"
 #async run tasks async/poll parameters and async check tasks delays/retries parameters
 async_timeout: 7200
 async_poll: 0

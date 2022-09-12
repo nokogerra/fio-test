@@ -1,0 +1,31 @@
+---
+- name: 'run fio'
+  ansible.builtin.shell: fio --output-format=json {{ fio_dir }}/{{ item }}.fio > {{ fio_dir }}/{{ ansible_hostname }}-{{ item }}.json
+  async: "{{ async_timeout }}"
+  poll: "{{ async_poll }}"
+  register: fio_run
+- name: 'wait for warm time to start iostat data gathering'
+  ansible.builtin.pause:
+    echo: true
+    seconds: "{{ ramp_secs }}"
+    prompt: 'waiting for ramp time to start iostat data gathering'
+- name: 'start iostat data gathering'
+  ansible.builtin.shell: iostat -xtym {{ storages | community.general.json_query("[*].pv") | join(' ') }} {{ iostat_int }} {{ iostat_count }} > {{ fio_dir }}/{{ ansible_hostname }}-{{ item }}-iostat.out
+  async: "{{ async_timeout }}"
+  poll: "{{ async_poll }}"
+  register: iostat_run
+- name: 'check if fio run is complete'
+  async_status:
+    jid: "{{ fio_run.ansible_job_id }}"
+  register: fio_run_result
+  until: fio_run_result.finished
+  delay: "{{ async_delay }}"
+  retries: "{{ async_retries }}"
+- name: 'check if iostat gathering is complete'
+  async_status:
+    jid: "{{ iostat_run.ansible_job_id }}"
+  register: iostat_run_result
+  until: iostat_run_result.finished
+  delay: "{{ async_delay }}"
+  retries: "{{ async_retries }}"
+...
