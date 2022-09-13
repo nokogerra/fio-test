@@ -1,0 +1,104 @@
+#cloud-config
+#hostname: fio01
+#fqdn: fio01.nokogerra.lab
+write_files:
+- path: /etc/netplan/50-cloud-init.yaml
+#  content: |
+#    network:
+#     version: 2
+#     ethernets:
+#      ens192:
+#       addresses: 10.215.253.11/24
+#       gateway4: 10.215.253.1
+#       dhcp6: false
+#       nameservers:
+#         addresses:
+#           - 10.215.0.2
+#           - 10.215.0.3
+#         search:
+#           - nokogerra.lab
+#       dhcp4: false
+#       optional: true
+- path: /etc/sysctl.d/60-disable-ipv6.conf
+  owner: root
+  content: |
+    net.ipv6.conf.all.disable_ipv6=1
+    net.ipv6.conf.default.disable_ipv6=1
+runcmd:
+- netplan --debug apply
+- sysctl -w net.ipv6.conf.all.disable_ipv6=1
+- sysctl -w net.ipv6.conf.default.disable_ipv6=1
+- apt-get -y update
+- add-apt-repository universe
+- apt-get -y clean
+- apt-get -y autoremove --purge
+timezone: Europe/Moscow
+system_info:
+  default_user:
+    name: default-user
+    lock_passwd: false
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+disable_root: false
+ssh_pwauth: yes
+users:
+  - default
+  - name: ansible 
+    gecos: ANSIBLE
+    lock_passwd: false
+    groups: sudo, users, admin
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_keys:
+      rsa_private: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+        NhAAAAAwEAAQAAAYEAtby+pOcLF9nxo7byiHoH0d/pIjiycO7frU813FBZxAR+6dy0YIlT
+        LtvoQJTmWs6qSo0FbnDj9NmWh8UHG/A9HOhqdQGHbWZ1GYzxeirn8J+WTIZNy6UtKkf3Z7
+        5dzscu1a/ZvCv0ZdQGizsxwt+G7T6BR3DKAPrxNxfPng2n9q1T352keUQ9LeMiBpg4H5DR
+        1fAZ8fOGx1nZGZ07/QubIrdpBAQO304uFgYi+dS8F6c/RMnMXK/ons5PGpWbYcPjhKMS1/
+        rv8/cmwUO7p8guGT7H3Jdw90zQ/MexLqpdbHld/V3I+5CX5TsxF7NQY/OqAjh+/P0fjzyY
+        NvFMEw4IkZ+ohu26mRvpT7TDVNW4Lq+kuH05RSUIRtIPYuaD+34Q3V93/b3LJ5vNZ4gRcl
+        rwwv/uZlUfePSF64MqhdRQ6GEhHIEUf0noi1ONf9kprkRNqYDyVSUHoEMjSrcvTmE7fRXQ
+        KQnPmjhDmaNBCN2hJjKHh+V9OCpIg66wJ2OUYAFbAAAFiHOvYMNzr2DDAAAAB3NzaC1yc2
+        EAAAGBALW8vqTnCxfZ8aO28oh6B9Hf6SI4snDu361PNdxQWcQEfunctGCJUy7b6ECU5lrO
+        qkqNBW5w4/TZlofFBxvwPRzoanUBh21mdRmM8Xoq5/CflkyGTculLSpH92e+Xc7HLtWv2b
+        wr9GXUBos7McLfhu0+gUdwygD68TcXz54Np/atU9+dpHlEPS3jIgaYOB+Q0dXwGfHzhsdZ
+        2RmdO/0LmyK3aQQEDt9OLhYGIvnUvBenP0TJzFyv6J7OTxqVm2HD44SjEtf67/P3JsFDu6
+        fILhk+x9yXcPdM0PzHsS6qXWx5Xf1dyPuQl+U7MRezUGPzqgI4fvz9H488mDbxTBMOCJGf
+        qIbtupkb6U+0w1TVuC6vpLh9OUUlCEbSD2Lmg/t+EN1fd/29yyebzWeIEXJa8ML/7mZVH3
+        j0heuDKoXUUOhhIRyBFH9J6ItTjX/ZKa5ETamA8lUlB6BDI0q3L05hO30V0CkJz5o4Q5mj
+        QQjdoSYyh4flfTgqSIOusCdjlGABWwAAAAMBAAEAAAGAINU4nBIhru1w+mLS7lUdlI0fUU
+        9s7Xo6btUgpezeSsuFIjr9W3Nz08Nm8kP0WfN8UHupv4olpNaqm1y9LA76+34BvaHJFbqs
+        7TDJb4jQ3mf2f1zEMUZmIn1d9SAvUmwpyfE7JQPL45mqlPzcwJghiDsCoCWAWSz85zcmCy
+        fscGRgAsY4MLBjXSbrvsVBXnKLdlsqVMvqTZmt3zLI4651GJCKKG+TQESfjtsM9pW4ZY2R
+        oJvUj+o33HjpUaQ1rjP1WMlJYRH65wv26aGr0gY3U228otBhcM8Vt7pRjUX02ruqKevl0s
+        t9HPMuqde403dTAeVO5Ozf0h+lAU1rQsCFalj7ENH9IB9JzNOIWsMH+A5AVtn4TiIW25Uf
+        3hDmZwVq2H3yla6+LRhNasbQ2wbKcRXmpgZijzqrhajZ1wCJ3btd1uVK3U55plzgNvB16F
+        1wHDNkq2zxnAKbo6+Qrs8R8o2gxVZ8Ejdg5yz9RMs0otahevV4uwExooIUoiCmeXYBAAAA
+        wF0tBRpCzvZtMRrlrNpkYMHbfeQTzl9rG+K0uGkkuuhAy4KwlQPxkdVu/mY3HEvVDGBT1L
+        8dbsiqRrbRF4aLVLJE1IN+ABOqcoEdzDXeULeaougARe+asOyb6BYUsslU82W6nPJNZAuW
+        3QXUQ/WpatTHfOkORB19FNywfZssf4GWt4mPOwkmFnV7Pv+6gV//OlRtcWzTtlmRsfHxn7
+        g50QmgoBF0IxPgwGkQOlq78qQ0cB0B6l8C31oV0YAy1jdg2gAAAMEA3d9ZJ3uTr8nRyM/V
+        5hJJ0r7/f8G3uOgaglqH7uGW5DJm7/kJZo3mVU2NCVQ9TuhsY1Z1PkeIhQhDkr7NY4Nt23
+        nk0UMPH1mI4LusYl0vZXBMKJ+GYVQBBir/I1KI5GwADGvcNYHCtGg9YI+ikGLygNVsibFQ
+        dFbJdG3ajphG7mq1Aa24oMFEooFnsoSoEsnLHa7+/lgn3IngRXpSk+6FGB9i26NFZ3BoAz
+        /5TnIdYZGRsoAeAvB6ngjls23x0gcvAAAAwQDRsP9YukIgDNtsKLWXHXkrZ+k3MPYav+bD
+        a5Oi6I55Y+srXBrwqGdY6p9G9+zJR0ua5dOOXk8a0kYXWEb8FjCd90pqqPwJDvZP5UI6Ln
+        FeNzUqR+wkSJ4ipGTvpd+W0KQ8ATT1LcQK7n34sfRgw/uqomIfeLnLP8CcAUIhj702vGYs
+        v0GFbHfepblwQYwkDgutpaaQidMd7KRw7jzvuqcjPfdFSXMthFSzJZsQCAY7Y/r9B4pw3C
+        Am83lpHvZmnZUAAAAQYW5zaWJsZUBzMS1hbnMwMQECAw==
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1vL6k5wsX2fGjtvKIegfR3+kiOLJw7t+tTzXcUFnEBH7p3LRgiVMu2+hAlOZazqpKjQVucOP02ZaHxQcb8D0c6Gp1AYdtZnUZjPF6Kufwn5ZMhk3LpS0qR/dnvl3Oxy7Vr9m8K/Rl1AaLOzHC34btPoFHcMoA+vE3F8+eDaf2rVPfnaR5RD0t4yIGmDgfkNHV8Bnx84bHWdkZnTv9C5sit2kEBA7fTi4WBiL51LwXpz9Eycxcr+iezk8alZthw+OEoxLX+u/z9ybBQ7unyC4ZPsfcl3D3TND8x7Euql1seV39Xcj7kJflOzEXs1Bj86oCOH78/R+PPJg28UwTDgiRn6iG7bqZG+lPtMNU1bgur6S4fTlFJQhG0g9i5oP7fhDdX3f9vcsnm81niBFyWvDC/+5mVR949IXrgyqF1FDoYSEcgRR/SeiLU41/2SmuRE2pgPJVJQegQyNKty9OYTt9FdApCc+aOEOZo0EI3aEmMoeH5X04KkiDrrAnY5RgAVs= ansible@s1-ans01
+chpasswd:
+  list: |
+    default-user:$6$u4QdFzm8YjVbHnKG$alf5CvGcGBPKBaPDCthOnBV/YUGMkjLGdeT5oH3wDTvUYeLUBIT2Psv9kPPcPimB4wGB6PjH7CcEMgH/yJVXn0
+    ansible:$6$ZSr6xuWPDoq0CnXk$c4C14Dr2RLjD9Tpd43Sxxyw8jNGecMQde9IvLFth9L0Fl4sreqlfGurfLK/qmZLJVqdpOOM2kCMy.fURTJgej.
+    root:$6$ivG0b09UZ5SlF.WL$S9QS3s1QDgZBmDIoRdf1fb4I2dIOBvqrIgVMd5aPovS320rt5SCh7lKe5defzBydb26qleJ2DuiSty6jp89mS/
+  expire: false
+package_upgrade: true
+package_reboot_if_required: true
+power_state:
+  delay: now
+  mode: reboot
+  message: Rebooting the OS
+  condition: if [ -e /var/run/reboot-required ]; then exit 0; else exit 1; fi

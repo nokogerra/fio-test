@@ -1,0 +1,44 @@
+---
+#disable UFW
+- name: 'disable UFW'
+  hosts: localhost
+  tasks:
+   - name: 'disable UFW'
+     community.general.ufw:
+       state: disabled
+#configure proxy server for apt/pip usage
+#if there is no proxy server in your environment, then this entire play should be commented out
+- name: 'set up proxy'
+  hosts: localhost
+  tasks:
+    - name: 'set up proxy'
+      include: internal_scripts/set_http_proxy.yml
+#configure nfs server
+- name: 'configure nfs server'
+  hosts: localhost
+  tasks:
+    - name: 'create directory structure'
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop: "{{ storages }}"
+    - name: 'nfs root permissions'
+      ansible.builtin.file:
+        path: "{{ nfs_root }}"
+        state: directory
+        recurse: true
+        mode: 02777
+        owner: nobody
+        group: nogroup
+    - name: 'install nfs server'
+      ansible.builtin.apt:
+        update_cache: true
+        name: nfs-server
+        state: present
+    - name: 'configure nfs export'
+      ansible.builtin.template:
+        src: "{{ templates_dir }}/nfs_export.j2"
+        dest: /etc/exports
+    - name: 'export nfs share'
+      ansible.builtin.shell: sudo exportfs -a; sudo systemctl restart nfs-server.service
+...

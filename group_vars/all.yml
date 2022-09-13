@@ -11,4 +11,7 @@ proxy_vars:
 #this is locale vars, EN_US is required for iostat output to be viable as iostat-cli input
 config_system_locale: "en_US.UTF-8"
 config_system_language: "en_US.UTF-8"
+#templates directory
+templates_dir: "/home/ansible/fio-test/templates"
+
 ...
