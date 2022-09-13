@@ -21,15 +21,13 @@
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
-      loop: "{{ storages }}"
+      loop: "{{ nfs_dirs }}"
     - name: 'nfs root permissions'
       ansible.builtin.file:
         path: "{{ nfs_root }}"
         state: directory
         recurse: true
-        mode: 02777
-        owner: nobody
-        group: nogroup
+        mode: 0777
     - name: 'install nfs server'
       ansible.builtin.apt:
         update_cache: true
