@@ -58,6 +58,7 @@
        owner: "{{ main_user }}"
        group: "{{ main_group }}"
      loop: "{{ storages }}"
+   - name: 'mount nfs'  
      ansible.posix.mount:
        path: "{{ nfs_root }}"
        src: "{{ nfs_ip }}:{{ nfs_root }}"
