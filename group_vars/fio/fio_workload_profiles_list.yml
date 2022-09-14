@@ -5,3 +5,4 @@ workload_profiles:
   - workload_profile2.j2
   - workload_profile3.j2
   - workload_profile4.j2
+layout_profile: workload_profile_layout.j2

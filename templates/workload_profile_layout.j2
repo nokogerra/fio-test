@@ -1,0 +1,28 @@
+[global]
+ioengine=libaio
+#omit guest cache and fsync
+fsync=0
+direct=1
+#randomness
+percentage_random={{ rand_pct_wp1 }}
+rw=randrw
+bssplit={{bssplit_wp1}}
+#time config
+ramp_time={{ ramp_secs }}
+time_based=1
+runtime={{ runtime_secs }}
+#test file size
+size={{ test_file_size }}
+#output format
+group_reporting
+
+{% for j in jobs -%}
+[{{ jobs[j].name }}]
+filename={{ jobs[j].file }}
+iodepth={{ jobs[j].io_depth}}
+zonemode={{ jobs[j].zonemode }}
+zonesize={{ jobs[j].zone_size_bytes }}
+zonerange={{ jobs[j].zone_range_bytes }}
+zoneskip={{ jobs[j].zone_skip_bytes }}
+create_only=1
+{% endfor %}
