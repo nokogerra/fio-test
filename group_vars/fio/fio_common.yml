@@ -2,8 +2,8 @@
 #async run tasks async/poll parameters and async check tasks delays/retries parameters
 async_timeout: 7200
 async_poll: 0
-async_delay: 10
-async_retries: 10
+async_delay: 15
+async_retries: 20
 #iostat collects perf snapshots on interval basis, e.g. interval 3 secs, count of intervals = 20, so iostat will be collecting data fo 60 seconds
 #iostat intervals length and count:
 iostat_int: 3
