@@ -1,6 +1,6 @@
 ---
 - name: 'run fio'
-  ansible.builtin.shell: fio --output-format=json {{ fio_dir }}/{{ item }}.fio > {{ fio_dir }}/{{ ansible_hostname }}-{{ item }}.json
+  ansible.builtin.shell: fio --output-format=json {{ fio_dir }}/{{ item }}.fio > {{ nfs_input }}/{{ ansible_hostname }}-{{ item }}.json
   async: "{{ async_timeout }}"
   poll: "{{ async_poll }}"
   register: fio_run
@@ -10,7 +10,7 @@
     seconds: "{{ ramp_secs }}"
     prompt: 'waiting for ramp time to start iostat data gathering'
 - name: 'start iostat data gathering'
-  ansible.builtin.shell: iostat -xtym {{ storages | community.general.json_query("[*].pv") | join(' ') }} {{ iostat_int }} {{ iostat_count }} > {{ fio_dir }}/{{ ansible_hostname }}-{{ item }}-iostat.out
+  ansible.builtin.shell: iostat -xtym {{ storages | community.general.json_query("[*].pv") | join(' ') }} {{ iostat_int }} {{ iostat_count }} > {{ nfs_input }}/{{ ansible_hostname }}-{{ item }}-iostat.out
   async: "{{ async_timeout }}"
   poll: "{{ async_poll }}"
   register: iostat_run

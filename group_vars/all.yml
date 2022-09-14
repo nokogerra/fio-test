@@ -14,4 +14,26 @@ config_system_language: "en_US.UTF-8"
 #templates directory
 templates_dir: "/home/ansible/fio-test/templates"
 
+#nfs vars
+nfs_ex:
+  export1:
+    dir: "/nfs_export"
+    clients: '*'
+    rws: rw
+    sync: sync
+    squash: no_root_squash
+#  export2:
+#    dir: "/nfs_export2"
+#    clients: '10.215.0.0/24'
+#    rws: rw
+#    sync: sync
+#    squash: no_root_squash
+
+nfs_ip: '10.215.252.10'
+nfs_root: /nfs_export
+nfs_input: /nfs_export/input
+nfs_dirs:
+  - /nfs_export/output/iostat-graphs
+  - /nfs_export/output/iostat-csvs
+  - /nfs_export/output/fio-lat-precentiles
 ...

@@ -22,6 +22,10 @@
         path: "{{ item }}"
         state: directory
       loop: "{{ nfs_dirs }}"
+    - name: 'create nfs input'
+      ansible.builtin.file:
+        path: "{{ nfs_input }}"
+        state: directory
     - name: 'nfs root permissions'
       ansible.builtin.file:
         path: "{{ nfs_root }}"

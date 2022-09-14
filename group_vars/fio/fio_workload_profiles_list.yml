@@ -1,5 +1,5 @@
 #this is just a list of workload profiles (names of j2 templates), which will be used in the repeatable fio-run-internal play
-#e.g. to run only 2 fio runs with workload_profile1.j2 and workload_profile4.j2, just comment 3-d and 4-th profiles.
+#e.g. to run only 2 fio runs with workload_profile1.j2 and workload_profile2.j2, just comment out 3-d and 4-th profiles.
 workload_profiles:
   - workload_profile1.j2
   - workload_profile2.j2

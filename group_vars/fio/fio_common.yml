@@ -9,8 +9,6 @@ async_retries: 10
 iostat_int: 3
 iostat_count: 20
 # FIO common job vars
-#templates_dir: "/home/ansible/fio-test/templates"
-#templates module is bugged about absolute of relative paths atm, so templates should be placed in the repo root
 fio_dir: "/fio"
 ramp_secs: "10"
 runtime_secs: "60"

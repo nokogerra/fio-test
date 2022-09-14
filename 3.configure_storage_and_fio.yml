@@ -13,11 +13,16 @@
   tasks:
     - name: 'set up proxy'
       include: internal_scripts/set_http_proxy.yml
-#configure PVs, VGs, LVs, file systems and mount those FS
-#based on fio_storages.yml vars
-- name: 'configure storage for fio test'
+#install packages, configure PVs, VGs, LVs, file systems and mount those FS
+- name: 'configure storage and packages for fio test'
   hosts: fio
   tasks:
+   - name: 'install packages'
+     ansible.builtin.apt:  
+       update_cache: true
+       name: "{{ item }}"
+       state: present
+     loop: "{{ fio_packages }}"
    - name: 'create PVs and VGs'
      community.general.lvg:
        vg: "{{ item.vg }}"
@@ -53,7 +58,12 @@
        owner: "{{ main_user }}"
        group: "{{ main_group }}"
      loop: "{{ storages }}"
-#install fio, iostat, make fio directory and use j2 templates to create fio job files 
+     ansible.posix.mount:
+       path: "{{ nfs_root }}"
+       src: "{{ nfs_ip }}:{{ nfs_root }}"
+       state: mounted
+       fstype: nfs
+#make fio directory and use j2 templates to create fio job files 
 - name: 'configure fio'
   hosts: fio
   tasks:
@@ -65,16 +75,6 @@
        owner: "{{ main_user }}"
        group: "{{ main_group }}"
        mode: 02777
-   - name: 'install fio'
-     ansible.builtin.apt:
-       update_cache: true
-       name: fio
-       state: present
-   - name: 'install sysstat (iostat)'
-     ansible.builtin.apt:  
-       update_cache: true
-       name: sysstat
-       state: present   
    - name: "Transferring all data files"
      template:
        src: "{{ templates_dir }}/{{ item | basename }}"

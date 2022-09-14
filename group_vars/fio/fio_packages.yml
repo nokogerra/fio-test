@@ -1,0 +1,6 @@
+---
+fio_packages:
+  - sysstat
+  - fio
+  - nfs-common
+...
