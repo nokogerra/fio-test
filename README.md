@@ -33,6 +33,7 @@ Playbook **2.configure_storage_and_fio.yml**:
 
 ## Тестирование и сбор данных
 Playbook **4.run_fio_and_collect_output.yml** фактически зацикливает play **internal_scripts/fio_run_internal.yml**, который в свою очередь запускает fio в async режиме, далее через **ramp_secs** (fio_common.yml) запускает iostat также в async режиме. Вывод iostat и fio идёт в {{ nfs_input }}. Следующие задачи проверяют состояние задач fio и iostat, async параметры указаны в all.yml.<br />
+Количество "прогонов" fio зависит от количества workload profile'ов, указанных в **group_vars/fio/fio_workload_profiles_list.yml**.
 Во время ramp_time FIO не фиксирует метрики производительности, поэтому фактически perf снапшоты fio и iostat начнут собирать одновременно.
 
 ## Анализ
