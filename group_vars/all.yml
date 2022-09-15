@@ -1,4 +1,5 @@
 ---
+#these vars are used to grant directories permissions, so change user and group accordingly.
 main_user: ansible
 main_group: ansible
 ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
@@ -11,10 +12,12 @@ proxy_vars:
 #this is locale vars, EN_US is required for iostat output to be viable as iostat-cli input
 config_system_locale: "en_US.UTF-8"
 config_system_language: "en_US.UTF-8"
+
 #templates directory
 templates_dir: "/home/ansible/fio-test/templates"
 
 #nfs vars
+#nfs export vars
 nfs_ex:
   export1:
     dir: "/nfs_export"
@@ -28,10 +31,13 @@ nfs_ex:
 #    rws: rw
 #    sync: sync
 #    squash: no_root_squash
-
+#nfs ip address is used by clients to mount nfs share
 nfs_ip: '10.215.252.10'
+#nfs_root is used to setup recursive permissions
 nfs_root: /nfs_export
+#nfs_input is used by clients to mount nfs share and store iostat and fio output
 nfs_input: /nfs_export/input
+#graphs and percentile CSVs will be stored in these dirs after fio and iostat outputs will be analyzed
 nfs_dirs:
   - /nfs_export/output/iostat-graphs
   - /nfs_export/output/iostat-csvs

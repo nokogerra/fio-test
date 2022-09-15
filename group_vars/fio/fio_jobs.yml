@@ -1,4 +1,7 @@
 ---
+#the description of jobs
+#there will be as many jobs in a fio job file as described here
+#this example creates relation: single lvol - single job - single file - multiple outstanding I/O per job
 jobs:
   job1:
     name: "job1"

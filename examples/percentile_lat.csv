@@ -1,0 +1,6 @@
+.jobs.read.slat_ns.mean;.jobs.read.clat_ns.mean;.jobs.read.clat_ns.percentile;.jobs.read.clat_ns.percentile_val;.jobs.write.slat_ns.mean;.jobs.write.clat_ns.mean;.jobs.write.clat_ns.percentile;.jobs.write.clat_ns.percentile_val
+8038.310479;964128.076237;50;741376;8295.466783;353225.054192;50;313344
+;;80;1171456;;;80;346112
+;;90;1646592;;;90;464896
+;;95;2179072;;;95;585728
+;;99;4227072;;;99;2277376

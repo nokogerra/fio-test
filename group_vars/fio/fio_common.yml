@@ -1,5 +1,5 @@
 ---
-#async run tasks async/poll parameters and async check tasks delays/retries parameters
+#async tasks async/poll parameters and async check tasks delay/retry parameters
 async_timeout: 7200
 async_poll: 0
 async_delay: 15

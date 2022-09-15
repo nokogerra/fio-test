@@ -1,6 +1,8 @@
 ---
+#just a list of packages to install on engine VMs
 fio_packages:
   - sysstat
   - fio
   - nfs-common
+#  - your_package
 ...

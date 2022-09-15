@@ -1,9 +1,9 @@
 ---
 #!!! make sure that you are launching this play from tmux window, so if ssh session from your desktop to the controller VM will be dropped, the task won't stop
-#this play is going to create fio job files on filesystems,
+#this play is going to create fio test job files on filesystems,
 #it could be very time consuming depending on the total file size and storage I/O potential
 #e.g. it could be hours for few hundreds of TiBs on all-flash storage
-#not sure how good async_status will be working on async job tracking process considering such a long time interval
+#not sure how good async_status will be working on async job tracking process considering such a long time interval, so this task is interactive
 - name: 'layout filesystems with fio job files'
   hosts: fio
   tasks:
