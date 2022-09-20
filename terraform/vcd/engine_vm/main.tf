@@ -9,7 +9,6 @@ resource "vcd_vapp_vm" "fio_engine_vm" {
     computer_name   = var.mod_vmname
     name            = var.mod_vmname
 
-
 #  override_template_disk {
 #    size_in_mb  = var.system_disk_size * 1024
 #    bus_type    = var.system_disk_bus
