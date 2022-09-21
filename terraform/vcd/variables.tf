@@ -101,6 +101,18 @@ variable "fio_ctrl_mem" {
   default = "2"  
 }
 
+variable "fio_ctrl_system_disk_size" {
+  type        = number
+  description = "VM system disk size in gigabytes"
+  default     = 16
+}
+
+variable "fio_ctrl_system_disk_bus" {
+  type        = string
+  description = "VM system disk bus type"
+  default     = "paravirtual"
+}
+
 #FIO engine vars
 variable "fio_engine_vapp" {
   description = ""

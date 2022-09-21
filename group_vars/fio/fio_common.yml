@@ -7,12 +7,12 @@ async_retries: 20
 #iostat collects perf snapshots on interval basis, e.g. interval 3 secs, count of intervals = 20, so iostat will be collecting data fo 60 seconds
 #iostat intervals length and count:
 iostat_int: 3
-iostat_count: 20
+iostat_count: 40
 # FIO common job vars
 fio_dir: "/fio"
-ramp_secs: "10"
-runtime_secs: "60"
-test_file_size: "150g"
+ramp_secs: "20"
+runtime_secs: "120"
+test_file_size: "16g"
 # FIO workload_profile1 job vars
 rand_pct_wp1: 70
 bssplit_wp1: 64k/50:256k/15:32k/25:8k/10,64k/25:256k/5:32k/35:8k/35

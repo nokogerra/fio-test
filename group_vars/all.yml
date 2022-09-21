@@ -32,7 +32,7 @@ nfs_ex:
 #    sync: sync
 #    squash: no_root_squash
 #nfs ip address is used by clients to mount nfs share
-nfs_ip: '10.215.252.10'
+nfs_ip: '10.215.252.50'
 #nfs_root is used to setup recursive permissions
 nfs_root: /nfs_export
 #nfs_input is used by clients to mount nfs share and store iostat and fio output

@@ -8,15 +8,15 @@ jobs:
     file: "/lvb/job1"
     io_depth: "2"
     zonemode: "strided"
-    zone_size_bytes: "32212254720"
-    zone_range_bytes: "32212254720"
-    zone_skip_bytes: "10737418240"
+    zone_size_bytes: "4294967296"
+    zone_range_bytes: "4294967296"
+    zone_skip_bytes: "1073741824"
   job2:
     name: "job2"
     file: "/lvc/job2"
     io_depth: "1"
     zonemode: strided
-    zone_size_bytes: "32212254720"
-    zone_range_bytes: "32212254720"
-    zone_skip_bytes: "10737418240"
+    zone_size_bytes: "4294967296"
+    zone_range_bytes: "4294967296"
+    zone_skip_bytes: "1073741824"
 ...
