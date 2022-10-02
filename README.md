@@ -12,7 +12,7 @@
 
 Windows:
 ```$env:TF_PLUGIN_CACHE_DIR="c:/path/to/terraform/plugin"
-$env:TF_CLI_CONFIG_FILE="c:/path/to/terraform/plugin/config.tf"```
+```$env:TF_CLI_CONFIG_FILE="c:/path/to/terraform/plugin/config.tf"
 
 
 
