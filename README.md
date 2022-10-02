@@ -15,22 +15,25 @@ Windows:
 $env:TF_PLUGIN_CACHE_DIR="c:/path/to/terraform/plugin"
 $env:TF_CLI_CONFIG_FILE="c:/path/to/terraform/plugin/config.tf"
 ```
+Linux:
+```
+export TF_PLUGIN_CACHE_DIR="/path/to/terraform/plugin"
+export TF_CLI_CONFIG_FILE="/path/to/terraform/plugin/terraform.rc"
+```
+После заполнения terraform.tfvars:
+```
+.\terraform.exe init
+.\terraform.exe plan
+.\terraform.exe apply
 
+> В случае, если в инфраструктуре используется proxy-сервер, следует раскомментировать соответствующую секцию в userdata*.yml файлах, чтобы обновление пакетов прошло успешно, или отключить обновление пакетов, заккоментировав строку с **"package_upgrade: true"**.
 
-
-
-Необходимо развернуть контроллер с использованием **userdata/userdata_ctrl.yml** с указанием нужного hostname и IP адреса.<br />
-Дефолтный логин **ansible:Root123-**. Пользователь имеет hardcoded private SSH ключ для подключения к engine-VM. Нагрузочное тестирование проводится до ввода систем хранения в эксплуатацию, поэтому вопрос безопасности не стоит.<br />
-В /home/ansible находится скрипт **install-packages.sh**, который установит необходимые пакеты и склонирует данный git репозиторий.
-См. **grpoup_vars/all.yml**.
+После развёртывания контроллера FIO в домашнем каталоге пользователя ansible помещается скрипт install-packages.sh. В случае использования proxy-сервера см. комментарии в скрипте.
 
 ## Конфигурация NFS сервера
 NFS сервер на контроллере используется для сбора выводов FIO и iostat с engine-VM.<br />
 Для установки и конфигурирования NFS сервера на контроллере используется playbook **1.set_up_nfs_server.yml**. Если в инфраструктуре не используется proxy сервер, play 'set up proxy' следует закомментировать.<br />
 См. **group_vars/all.yml**.
-
-## Развёртывание engine-VM
-Здесь будет описание развёртывания VM.
 
 ## Конфигурирование engine-VM
 Playbook **2.configure_storage_and_fio.yml**:
