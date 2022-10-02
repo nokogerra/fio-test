@@ -1,30 +1,20 @@
 #cloud-config
 hostname: ${ci_hostname}
 instance-id: ${ci_instance_id}
-#fqdn: fio01.nokogerra.lab
 write_files:
-- path: /etc/netplan/50-cloud-init.yaml
-#  content: |
-#    network:
-#     version: 2
-#     ethernets:
-#      ens192:
-#       addresses: ${ci_ipaddr}
-#       gateway4: ${ci_gw}
-#       dhcp6: false
-#       nameservers:
-#         addresses:
-#           - ${ci_dns}
-#           #- 10.215.0.3
-#         search:
-#           - nokogerra.lab
-#       dhcp4: false
-#       optional: true
 - path: /etc/sysctl.d/60-disable-ipv6.conf
   owner: root
   content: |
     net.ipv6.conf.all.disable_ipv6=1
     net.ipv6.conf.default.disable_ipv6=1
+#- path: /etc/apt/apt.conf.d/00-proxy
+#  permissions: 0640
+#  owner: root
+#  content: |
+#    Acquire::http { Proxy "http://example.com:8080"; };
+#    Acquire::https { Proxy "http://example.com:8080"; };
+#    Acquire::http::Pipeline-Depth "23";
+#    Acquire::Languages "none";
 timezone: Europe/Moscow
 system_info:
   default_user:
