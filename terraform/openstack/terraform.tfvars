@@ -1,9 +1,9 @@
 #Provider vars
-os_user = "akgopylov"
-os_password = "7d$T3BH2l5dT"
+os_user = ""
+os_password = ""
 os_region = "RegionOne"
 os_tenant = "ezhilin_Test"
-os_url = "http://api.ts-cloud.ru:5000/v3/"
+os_url = "http://api.some_fqdn:5000/v3/"
 os_router_name = "fio-router"
 
 #Networking vars
