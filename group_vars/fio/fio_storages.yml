@@ -2,12 +2,12 @@
 #this is the list of disks/PVs/VGs/LVs to create on destination VMs
 #if you have more disks on your engine VMs, then you should describe them here
 storages:
-  - name: "sdb"
-    pv: "sdb"
+  - name: "vdb"
+    pv: "vdb"
     vg: "vgb"
     lv: "lvb"
-  - name: "sdc"
-    pv: "sdc"
+  - name: "vdc"
+    pv: "vdc"
     vg: "vgc"
     lv: "lvc"
 #  - name: "sdd"

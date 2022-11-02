@@ -1,9 +1,9 @@
 #Provider vars
-os_user = ""
-os_password = ""
+os_user = "user"
+os_password = "password"
 os_region = "RegionOne"
-os_tenant = "ezhilin_Test"
-os_url = "http://api.some_fqdn:5000/v3/"
+os_tenant = "tenant"
+os_url = "http://api.fqdn:5000/v3/"
 os_router_name = "fio-router"
 
 #Networking vars
